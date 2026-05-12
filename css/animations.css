@@ -1,0 +1,27 @@
+/* ═══════════════════════════════════════════
+   ANIMATIONS.CSS — Keyframes & transitions
+   ═══════════════════════════════════════════ */
+
+/* ─── PRELOADER ─── */
+@keyframes typewriter  { from { width: 0 } to { width: 230px } }
+@keyframes blink       { 50% { border-color: transparent } }
+@keyframes prebarfill  { 0% { width: 0% } 70% { width: 65% } 90% { width: 88% } 100% { width: 100% } }
+
+/* ─── ENTRANCE ─── */
+@keyframes fadeDown { from { opacity: 0; transform: translateY(-12px) } to { opacity: 1; transform: translateY(0) } }
+@keyframes fadeUp   { from { opacity: 0; transform: translateY(12px)  } to { opacity: 1; transform: translateY(0) } }
+@keyframes slideUp  { to   { transform: translateY(0) } }
+
+/* ─── AMBIENT / CONTINUOUS ─── */
+@keyframes wscroll  { from { background-position-x: 0 }   to { background-position-x: 18px } }
+@keyframes marquee  { from { transform: translateX(0) }    to { transform: translateX(-50%) } }
+@keyframes scanline { 0% { left: -100% } 100% { left: 100% } }
+@keyframes pulse    { 0%, 100% { opacity: 1; transform: scale(1) } 50% { opacity: .4; transform: scale(1.4) } }
+
+/* ─── GLITCH ─── */
+@keyframes glitch-top { 0% { transform: translate(-2px,0) } 50% { transform: translate(2px,0) } 100% { transform: translate(0,0) } }
+@keyframes glitch-bot { 0% { transform: translate(2px,0)  } 50% { transform: translate(-2px,0)} 100% { transform: translate(0,0) } }
+
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+@keyframes hideCursor { to { border-right-color: transparent; border-right-width: 0; } }

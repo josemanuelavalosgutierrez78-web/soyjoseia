@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ─── SEO & Social ─── -->
+<title>Jose Gutierrez — IA que funciona en la vida real</title>
+<meta name="description" content="No necesitas trabajar más. Necesitas usar mejor la IA. Aprende a aplicar inteligencia artificial a problemas reales con Jose Gutierrez.">
+<meta property="og:title"       content="Jose Gutierrez — IA que funciona en la vida real">
+<meta property="og:description" content="No necesitas trabajar más. Necesitas usar mejor la IA. Aprende a aplicar inteligencia artificial a problemas reales.">
+<meta property="og:type"        content="website">
+<meta property="og:url"         content="https://josegutierrezz.com">
+<meta property="og:image"       content="https://josegutierrezz.com/og-image.jpg">
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:title"       content="Jose Gutierrez — IA que funciona en la vida real">
+<meta name="twitter:description" content="No necesitas trabajar más. Necesitas usar mejor la IA.">
+
+<!-- ─── Stylesheets ─── -->
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/layout.css">
+
+<style>
+  /* Hero photo — sin conflictos */
+  .hero-photo { flex: 1 1 0; min-width: 0; }
+  .hero-photo::after { display: none; }
+
+  /* Sobre mí — 2 columnas */
+  .sobre-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 80px;
+  align-items: center;
+  max-width: 960px;
+  margin: 0 auto;
+  text-align: left;
+  padding: 0 60px;
+  margin-top: 0;   /* ← el label ya está dentro, no necesita separación */
+}
+  .sobre-img-wrap {
+    position: relative;
+  }
+  .sobre-img-wrap img {
+    width: 100%;
+    max-width: 340px;
+    height: auto;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: 16px;
+    display: block;
+    filter: contrast(1.05) brightness(0.95);
+  }
+  .sobre-img-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 20px;
+    background: transparent;
+    border: 1px solid rgba(127,255,178,.15);
+    pointer-events: none;
+  }
+  .sobre-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 32px;
+  }
+  .sobre-stat {
+    background: rgba(127,255,178,.05);
+    border: 1px solid rgba(127,255,178,.1);
+    border-radius: 10px;
+    padding: 16px 20px;
+  }
+  .sobre-stat-num {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 28px; font-weight: 800;
+    color: var(--accent); letter-spacing: -.02em;
+    line-height: 1;
+  }
+  .sobre-stat-label {
+    font-size: 12px; color: var(--muted);
+    font-weight: 300; margin-top: 4px;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* Comunidad — stats sociales */
+  .comunidad-stats {
+    display: flex;
+    gap: 48px;
+    justify-content: center;
+    margin-bottom: 48px;
+    flex-wrap: wrap;
+  }
+  .com-stat { text-align: center; }
+  .com-stat-num {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(32px,4vw,48px); font-weight: 800;
+    color: var(--ink); letter-spacing: -.03em;
+    line-height: 1;
+  }
+  .com-stat-num span { color: var(--accent); }
+  .com-stat-label {
+    font-size: 12px; color: var(--muted);
+    font-weight: 300; margin-top: 6px;
+    letter-spacing: .06em; text-transform: uppercase;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-tiktok {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600;
+    color: #0d1525; background: var(--accent);
+    border-radius: 8px; padding: 14px 28px;
+    text-decoration: none; transition: background .2s, transform .15s;
+  }
+  .btn-tiktok:hover { background: #5fffaa; transform: translateY(-2px); }
+  .btn-tiktok svg { flex-shrink: 0; }
+
+  @media (max-width: 768px) {
+    .sobre-grid { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+    .sobre-img-wrap { margin: 0 auto; max-width: 260px; }
+    .sobre-img-wrap img { max-width: 100%; }
+    .sobre-stats { grid-template-columns: 1fr 1fr; }
+    .comunidad-stats { gap: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <div class="pre-logo" id="pre-logo">Jose IA</div>
+  <div class="pre-tagline">Acercar la inteligencia artificial y tecnología a personas y comunidades reales</div>
+  <div class="pre-bar-wrap"><div class="pre-bar"></div></div>
+  <div class="pre-pct" id="pre-pct">0%</div>
+</div>
+
+<!-- CURSOR -->
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="ring"></div>
+<div class="cursor-label" id="cur-label"></div>
+
+<!-- CANVAS LAYERS -->
+<canvas id="matrix-canvas"></canvas>
+<canvas id="bg"></canvas>
+<canvas id="dotgrid"></canvas>
+<canvas id="ripple-canvas"></canvas>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">JOSE.IA</div>
+  <ul class="nav-ul">
+    <li><a href="#servicios" data-scroll="servicios">Por qué funciona</a></li>
+    <li><a href="#casos"     data-scroll="casos">Casos reales</a></li>
+    <li><a href="#como"      data-scroll="como">Cómo lo hago</a></li>
+    <li><a href="#contacto"  data-scroll="contacto" class="nav-cta" data-magnetic>Hablemos →</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Abrir menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<div id="mobile-drawer">
+  <div id="mobile-drawer-bg"></div>
+  <div id="mobile-drawer-panel">
+    <a class="drawer-link" href="#servicios" data-scroll="servicios">Por qué funciona</a>
+    <a class="drawer-link" href="#casos"     data-scroll="casos">Casos reales</a>
+    <a class="drawer-link" href="#como"      data-scroll="como">Cómo lo hago</a>
+    <a class="drawer-cta"  href="#contacto"  data-scroll="contacto">Hablemos →</a>
+  </div>
+</div>
+
+<!-- AMBIENT OVERLAYS -->
+<div class="big-num" id="big-num">01</div>
+<div class="scroll-bar"><span class="scroll-label">scroll</span><div class="scroll-line"></div></div>
+<div class="corner-badge"><div class="cbadge-dot"></div><span class="cbadge-text">Aprende · Aplica · Avanza</span></div>
+
+<!-- SMART FLOATING CTA -->
+<div id="smart-cta">
+  <div class="smart-cta-inner" id="smart-cta-inner">
+    <div class="smart-cta-dot"></div>
+    <span class="smart-cta-text">¿Quieres usar IA de verdad?</span>
+    <span class="smart-cta-arrow">→</span>
+    <button class="smart-cta-close" id="smart-close">×</button>
+  </div>
+</div>
+
+<div id="scroll-root">
+
+  <!-- 01 · HERO -->
+  <section class="home" id="home">
+    <div class="intro-wrapper" id="tilt-block">
+
+      <div class="tilt-block" id="tilt-inner">
+        <div class="lm">
+          <div class="li l1">
+            <h1 class="intro-id">
+              <span class="pfx">Hola, soy</span>
+              <span class="name"><span class="name-text glitch-name" data-text="Jose" id="g1">Jose</span><div class="wave-wrap"><div class="wave"></div></div></span>
+              <span class="name"><span class="name-text glitch-name" data-text="Gutierrez" id="g2">Gutierrez</span><div class="wave-wrap"><div class="wave"></div></div></span>
+            </h1>
+          </div>
+        </div>
+
+        <div class="lm" style="margin-bottom:44px">
+          <div class="li l2">
+            <p class="intro-id">
+              <span class="pfx">y trabajo con</span>
+              <span class="name"><span class="name-text glitch-name" data-text="IA real" id="g3"><span id="scramble-main">IA real</span></span><div class="wave-wrap"><div class="wave"></div></div></span>
+            </p>
+          </div>
+        </div>
+
+        <div class="intro-roles">
+          <p class="intro-role ir1">No necesitas trabajar más.</p>
+          <p class="intro-role ir2">Necesitas usar mejor la IA.</p>
+        </div>
+
+        <div class="intro-links">
+          <ul>
+            <li><a class="btn-primary la1" href="#contacto" data-scroll="contacto" data-magnetic data-cursor="ESCRIBIR">Quiero empezar →</a></li>
+            <li><a class="btn-ghost   la2" href="#como"     data-scroll="como"     data-cursor="VER">Ver cómo lo aplico</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="hero-photo">
+        <img src="img/jose.png" alt="Jose Gutierrez">
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 02 · IDENTIFICACIÓN -->
+  <section class="metrics" id="servicios">
+    <p class="section-label reveal" style="text-align:center;font-size:10px;letter-spacing:.2em">¿Te suena familiar?</p>
+    <div class="metrics-grid">
+
+      <div class="metric-card reveal reveal-d1">
+        <div class="metric-num" style="font-size:clamp(18px,2.2vw,28px);line-height:1.4;font-family:'DM Sans',sans-serif;font-weight:400;color:var(--muted)">
+          "Sé que la IA existe, pero no sé<br>
+          <span style="color:var(--ink);font-weight:500">por dónde empezar."</span>
+        </div>
+        <div class="metric-desc" style="margin-top:20px">Hay demasiado ruido. Herramientas, cursos, tutoriales. Pero nadie te dice qué usar tú, con tu trabajo, en tu día a día.</div>
+        <div class="metric-card-num">01</div>
+      </div>
+
+      <div class="metric-card reveal reveal-d2">
+        <div class="metric-num" style="font-size:clamp(18px,2.2vw,28px);line-height:1.4;font-family:'DM Sans',sans-serif;font-weight:400;color:var(--muted)">
+          "Pierdo horas en tareas que<br>
+          <span style="color:var(--ink);font-weight:500">siento que podría evitar."</span>
+        </div>
+        <div class="metric-desc" style="margin-top:20px">Responder los mismos mensajes, organizar información, buscar datos. Todo eso se puede delegar a la IA. Hoy.</div>
+        <div class="metric-card-num">02</div>
+      </div>
+
+      <div class="metric-card reveal reveal-d3">
+        <div class="metric-num" style="font-size:clamp(18px,2.2vw,28px);line-height:1.4;font-family:'DM Sans',sans-serif;font-weight:400;color:var(--muted)">
+          "Quiero generar más ingresos<br>
+          <span style="color:var(--ink);font-weight:500">pero no tengo tiempo."</span>
+        </div>
+        <div class="metric-desc" style="margin-top:20px">La IA no te da tiempo de la nada. Pero sí libera el que ya tienes para que lo uses en lo que realmente importa.</div>
+        <div class="metric-card-num">03</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 03 · IDEA CENTRAL -->
+  <section class="how" id="como">
+    <p class="section-label reveal">Mi forma de verlo</p>
+    <h2 class="reveal" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(28px,4vw,52px);font-weight:800;color:var(--ink);letter-spacing:-.03em;margin-bottom:0">
+      La mayoría no necesita<br><span style="color:var(--accent)">más herramientas.</span>
+    </h2>
+
+    <div class="how-grid">
+      <div class="how-steps">
+        <div class="step reveal reveal-d1">
+          <span class="step-num">01</span>
+          <div class="step-body">
+            <div class="step-title">El problema no es la IA</div>
+            <div class="step-desc">Hay miles de herramientas gratuitas que ya puedes usar hoy. El problema es que nadie te enseña cómo conectarlas con lo que tú haces. Eso es lo que yo traduzco.</div>
+          </div>
+          <div class="step-bar"></div>
+        </div>
+        <div class="step reveal reveal-d2">
+          <span class="step-num">02</span>
+          <div class="step-body">
+            <div class="step-title">Ejemplos concretos, no teoría</div>
+            <div class="step-desc">Un freelancer que automatiza sus propuestas en 5 minutos. Un emprendedor que responde 100 mensajes sin tocar el celular. Un estudiante que resume semanas de lectura en horas. Así se usa la IA.</div>
+          </div>
+          <div class="step-bar"></div>
+        </div>
+        <div class="step reveal reveal-d3">
+          <span class="step-num">03</span>
+          <div class="step-body">
+            <div class="step-title">Aplicar primero, entender después</div>
+            <div class="step-desc">No necesitas saber cómo funciona un motor para manejar un auto. Comparto lo que funciona en la vida real, sin cursos interminables ni tecnicismos que asustan.</div>
+          </div>
+          <div class="step-bar"></div>
+        </div>
+      </div>
+
+      <div class="flow-diagram reveal reveal-d4">
+        <canvas class="flow-canvas" id="flow-canvas"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 · CASOS REALES -->
+  <section class="cases" id="casos">
+    <p class="section-label reveal">Lo que he hecho</p>
+    <h2 class="reveal" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(28px,4vw,52px);font-weight:800;color:var(--ink);letter-spacing:-.03em;margin-bottom:0">
+      Resultados reales,<br><span style="color:var(--muted);font-weight:400;font-size:.7em">Sin adornos</span>
+    </h2>
+
+    <div class="cases-wrapper reveal" style="margin-top:60px">
+      <div class="cases-scroll" id="cases-scroll">
+        <div class="cases-track">
+
+          <div class="case-card">
+            <div class="case-tag">Emprendedor · Comercio online</div>
+            <div class="case-metric" style="font-size:36px;line-height:1.3">De 3 horas<br><span style="font-size:.75em;color:var(--accent)">a 20 minutos</span></div>
+            <div class="case-desc" style="margin-top:16px">Pasaba horas respondiendo los mismos mensajes en WhatsApp e Instagram. Le armé un sistema con IA que filtra, responde y escala solo lo que necesita su atención. Ahora dedica ese tiempo a crecer.</div>
+            <div class="case-company">Tienda online · Lima</div>
+            <div class="case-num">01</div>
+          </div>
+
+          <div class="case-card">
+            <div class="case-tag">Freelancer · Diseño gráfico</div>
+            <div class="case-metric" style="font-size:36px;line-height:1.3">Propuestas<br><span style="font-size:.75em;color:var(--accent)">en 8 minutos</span></div>
+            <div class="case-desc" style="margin-top:16px">Le tomaba dos horas armar cada propuesta desde cero. Con un prompt bien configurado y sus plantillas, ahora genera borradores en minutos que solo ajusta antes de enviar.</div>
+            <div class="case-company">Diseñadora independiente · Remoto</div>
+            <div class="case-num">02</div>
+          </div>
+
+          <div class="case-card">
+            <div class="case-tag">Estudiante · Universidad</div>
+            <div class="case-metric" style="font-size:36px;line-height:1.3">Un semestre<br><span style="font-size:.75em;color:var(--accent)">resumido en 2 días</span></div>
+            <div class="case-desc" style="margin-top:16px">Tenía semanas de material acumulado y exámenes encima. Le enseñé a usar IA para resumir, relacionar conceptos y generar preguntas de práctica desde sus propios apuntes.</div>
+            <div class="case-company">Universitaria · Lima</div>
+            <div class="case-num">03</div>
+          </div>
+
+          <div class="case-card">
+            <div class="case-tag">Trabajador dependiente · Finanzas</div>
+            <div class="case-metric" style="font-size:36px;line-height:1.3">Reportes<br><span style="font-size:.75em;color:var(--accent)">sin el estrés</span></div>
+            <div class="case-desc" style="margin-top:16px">Cada semana armaba reportes en Excel que le tomaban una tarde entera. Con IA, el análisis inicial y el resumen ejecutivo los genera en minutos. Él solo revisa y valida.</div>
+            <div class="case-company">Analista financiero · San Isidro</div>
+            <div class="case-num">04</div>
+          </div>
+
+        </div>
+      </div>
+      <div class="cases-fade-right"></div>
+      <div class="cases-dots" id="cases-dots">
+        <div class="cases-dot active"></div>
+        <div class="cases-dot"></div>
+        <div class="cases-dot"></div>
+        <div class="cases-dot"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 · SOBRE MÍ — 2 columnas con foto -->
+  <section class="how" id="sobre-mi" style="background:#070c15">
+    <div class="reveal">
+      <p class="section-label" style="margin-bottom:16px">Sobre mí</p>
+      <div class="sobre-grid">
+
+        <div class="sobre-img-wrap">
+          <img src="img/jose.png" alt="Jose Gutierrez">
+          <div class="sobre-stats">
+            <div class="sobre-stat">
+              <div class="sobre-stat-num">+2</div>
+              <div class="sobre-stat-label">Años con IA aplicada</div>
+            </div>
+            <div class="sobre-stat">
+              <div class="sobre-stat-num">+50</div>
+              <div class="sobre-stat-label">Personas ayudadas</div>
+            </div>
+            <div class="sobre-stat">
+              <div class="sobre-stat-num">100%</div>
+              <div class="sobre-stat-label">Casos reales</div>
+            </div>
+            <div class="sobre-stat">
+              <div class="sobre-stat-num">0</div>
+              <div class="sobre-stat-label">Tecnicismos innecesarios</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h2 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(32px,4vw,48px);font-weight:800;color:var(--ink);letter-spacing:-.03em;line-height:1.1;margin-bottom:12px">
+            Soy Jose.IA
+          </h2>
+          <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(16px,2vw,20px);font-weight:600;color:var(--accent);letter-spacing:-.01em;margin-bottom:28px;line-height:1.3">
+            Solo aplico la IA antes que la mayoría.
+          </p>
+          <p style="font-size:15px;color:var(--muted);font-weight:300;line-height:1.9;margin-bottom:20px">
+            Ayudo a personas y comunidades a usar la inteligencia artificial y automatización para ahorrar tiempo y trabajar mejor.
+          </p>
+          <p style="font-size:15px;color:var(--muted);font-weight:300;line-height:1.9">
+            Mi criterio es simple: si una herramienta no resuelve algo concreto en menos de una semana, no la recomiendo. Si lo que aprendo no lo puedo explicar en palabras simples, no lo comparto todavía.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 · COMUNIDAD — con stats sociales -->
+  <section class="how" id="comunidad" style="background:#101828;text-align:center">
+    <div class="reveal">
+      <p class="section-label" style="margin-bottom:24px">Comunidad</p>
+      <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(22px,3vw,38px);font-weight:800;color:var(--ink);letter-spacing:-.03em;max-width:700px;line-height:1.3;margin-bottom:48px;margin-left:auto;margin-right:auto">
+        Aprende conmigo,<br><span style="color:var(--muted);font-weight:400;font-size:.75em">sin cursos de 40 horas.</span>
+      </p>
+
+      <p style="font-size:15px;color:var(--muted);font-weight:300;line-height:1.9;max-width:560px;margin-bottom:36px;margin-left:auto;margin-right:auto">Comparto lo que voy descubriendo: prompts que funcionan, flujos de trabajo reales, errores que cometí y cómo los corregí.</p>
+
+      <a href="https://www.tiktok.com/@soyjose.ia" class="btn-tiktok" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg>
+        Seguirme en TikTok @soyjose.ia
+      </a>
+    </div>
+  </section>
+
+  <!-- 07 · FOOTER -->
+  <footer id="contacto">
+    <div class="footer-inner reveal">
+
+      <div class="footer-brand">
+        <div class="footer-logo">JOSE.IA</div>
+        <p class="footer-desc">
+          Si tienes una tarea que te roba tiempo, un proceso que repites siempre igual o simplemente quieres saber por dónde empezar — escríbeme. Sin formularios, sin ventas.
+        </p>
+        <a href="https://wa.me/51982477102" class="footer-wa" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          Escríbeme por WhatsApp →
+        </a>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title">Secciones</div>
+        <a class="footer-col-link" href="#servicios" data-scroll="servicios">Por qué funciona</a>
+        <a class="footer-col-link" href="#casos"     data-scroll="casos">Casos reales</a>
+        <a class="footer-col-link" href="#como"      data-scroll="como">Cómo lo hago</a>
+        <a class="footer-col-link" href="#sobre-mi">Sobre mí</a>
+        <a class="footer-col-link" href="#comunidad">Comunidad</a>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title">Redes</div>
+        <a class="footer-col-link" href="https://www.tiktok.com/@soyjose.ia" target="_blank" rel="noopener">TikTok @soyjose.ia</a>
+        <a class="footer-col-link" href="#" target="_blank" rel="noopener">Instagram</a>
+        <div class="footer-col-title" style="margin-top:32px">Ubicación</div>
+        <span class="footer-col-link" style="cursor:default;pointer-events:none">Lima, Perú</span>
+        <span class="footer-col-link" style="cursor:default;pointer-events:none">IA aplicada</span>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-bottom-left">
+        <div class="footer-status-dot"></div>
+        <span>© 2025 Jose Gutierrez · Todos los derechos reservados</span>
+      </div>
+      <div class="footer-bottom-right">Aprende · Aplica · Avanza</div>
+    </div>
+  </footer>
+
+</div><!-- /scroll-root -->
+
+<!-- MARQUEE (fixed bottom) -->
+<div class="marquee-wrap">
+  <div class="marquee">
+    <span class="marquee-item"><span>✦</span>IA aplicada</span>
+    <span class="marquee-item"><span>✦</span>Ahorra tiempo real</span>
+    <span class="marquee-item"><span>✦</span>Sin tecnicismos</span>
+    <span class="marquee-item"><span>✦</span>Trabaja mejor</span>
+    <span class="marquee-item"><span>✦</span>Genera ingresos</span>
+    <span class="marquee-item"><span>✦</span>Automatiza lo repetitivo</span>
+    <span class="marquee-item"><span>✦</span>IA aplicada</span>
+    <span class="marquee-item"><span>✦</span>Ahorra tiempo real</span>
+    <span class="marquee-item"><span>✦</span>Sin tecnicismos</span>
+    <span class="marquee-item"><span>✦</span>Trabaja mejor</span>
+    <span class="marquee-item"><span>✦</span>Genera ingresos</span>
+    <span class="marquee-item"><span>✦</span>Automatiza lo repetitivo</span>
+  </div>
+</div>
+
+<!-- SCRIPTS -->
+<script src="js/preloader.js"></script>
+<script src="js/cursor.js"></script>
+<script src="js/background.js"></script>
+<script src="js/diagrams.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/ui.js"></script>
+
+</body>
+</html>

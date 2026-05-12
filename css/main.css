@@ -1,0 +1,75 @@
+/* ═══════════════════════════════════════════
+   MAIN.CSS — Variables, Reset, Base
+   ═══════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+/* ─── TOKENS ─── */
+:root {
+  --bg:      #101828;
+  --ink:     #eef2fa;
+  --muted:   rgba(220, 230, 245, .72);
+  --faint:   rgba(180, 200, 230, .38);
+  --accent:  #7fffb2;
+  --accent2: #00e5ff;
+  --danger:  #ff4060;
+  --surface:  #1a2540;
+  --surface2: #1e2d4a;
+}
+
+/* ─── RESET ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  min-height: 100vh;
+  background: #101828;
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ─── CANVAS LAYERS — all behind content ─── */
+#matrix-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .05; }
+#bg            { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+#dotgrid       { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+#ripple-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+
+/* Radial vignette — behind content */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(16,24,40,.55) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Film grain noise — behind content */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity: .025;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── SCROLL ROOT — sits above all canvas layers ─── */
+#scroll-root {
+  position: relative;
+  z-index: 10;
+}
+
+/* ─── SECTIONS BASE ─── */
+section { position: relative; z-index: 10; }
+footer  { position: relative; z-index: 10; }
+
+.section-label {
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  margin-bottom: 16px;
+  opacity: .85;
+}
