@@ -524,5 +524,21 @@ footer {
   html, body { overflow-x: hidden; max-width: 100vw; }
   .intro-wrapper { width: 100% !important; max-width: 100% !important; padding: 0 !important; }
 
+
+  .li {
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+  }
+
+  .lm {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .intro-links ul {
+    justify-content: center !important;
+  }
+
 } /* ← llave de cierre del media query */
 
