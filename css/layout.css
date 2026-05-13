@@ -402,56 +402,147 @@ footer {
 }
 
 @media (max-width: 700px) {
-  /* NAV */
-  nav            { padding: 0 20px; }
-  .nav-ul        { display: none; }
-  .nav-hamburger { display: flex; }
 
-  /* HERO */
-  .home          { padding: 90px 20px 60px; min-height: auto; }
-  .intro-links ul { flex-direction: column; gap: 12px; }
-  .btn-primary, .btn-ghost { width: auto; justify-content: center; padding: 16px 20px; }
+  /* ── BASE: todo centrado en móvil ── */
+  .home,
+  .metrics,
+  .how,
+  .cases,
+  footer {
+    text-align: center;
+  }
 
-  /* SECTIONS */
-  .metrics, .how, .cases, footer { padding-left: 20px; padding-right: 20px; }
+  /* ── HERO ── */
+  .home { padding: 90px 20px 60px; min-height: auto; }
+
+  .intro-wrapper {
+    flex-direction: column-reverse; /* foto arriba, texto abajo */
+    gap: 32px;
+    align-items: center;
+  }
+
+  .tilt-block {
+    align-items: center;
+    text-align: center;
+  }
+
+  .intro-id { text-align: center; }
+
+  .intro-roles {
+    text-align: center;
+  }
+
+  .intro-links ul {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .btn-primary, .btn-ghost {
+    width: 100%;
+    max-width: 300px;
+    justify-content: center;
+    padding: 16px 20px;
+  }
+
+  .hero-photo {
+    width: 100%;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .hero-photo img {
+    max-width: 260px;
+    height: auto;
+    aspect-ratio: 3/4;
+  }
+
+  /* ── SECTIONS ── */
+  .metrics, .how, .cases, footer {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
   .metrics { padding-top: 60px; padding-bottom: 60px; }
   .how     { padding-top: 60px; padding-bottom: 60px; }
   .cases   { padding-top: 60px; padding-bottom: 60px; }
   footer   { padding-top: 60px; }
 
-  /* TE SUENA FAMILIAR label */
-  .metrics > .section-label { font-size: clamp(18px, 5vw, 28px); }
+  /* ── SECTION LABELS ── */
+  .section-label {
+    text-align: center !important;
+    display: block;
+  }
 
-  /* METRIC CARDS */
-  .metric-card { padding: 32px 20px; }
+  /* ── SOBRE MÍ ── */
+  .sobre-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+    text-align: center !important;
+    padding: 0 !important;
+  }
 
-  /* HOW-GRID stacked */
-  .how-grid { gap: 40px; margin-top: 32px; }
+  .sobre-img-wrap {
+    margin: 0 auto;
+    max-width: 220px;
+  }
 
-  /* CASOS scroll */
+  .sobre-stats {
+    grid-template-columns: 1fr 1fr;
+    max-width: 300px;
+    margin: 24px auto 0;
+  }
+
+  .sobre-grid > div:last-child {
+    text-align: center;
+  }
+
+  /* ── HOW STEPS ── */
+  .step { text-align: left; } /* pasos sí van a la izquierda, son listas */
+
+  /* ── CASOS ── */
   .cases-fade-right { display: none; }
-  .cases-scroll { padding-bottom: 12px; }
+  .case-card { text-align: left; } /* cards de casos también */
 
-  /* FOOTER */
-  .footer-inner  { grid-template-columns: 1fr; gap: 40px; }
-  .footer-brand  { grid-column: auto; }
-  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 10px; padding-bottom: 80px; }
+  /* ── COMUNIDAD ── */
+  #comunidad { text-align: center; }
+  .comunidad-stats { justify-content: center; }
 
-  /* AMBIENT UI */
+  /* ── FOOTER ── */
+  .footer-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    text-align: center;
+  }
+
+  .footer-brand { grid-column: auto; align-items: center; }
+  .footer-desc  { max-width: 100%; text-align: center; }
+  .footer-wa    { align-self: center; }
+
+  .footer-col { text-align: center; }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 80px;
+  }
+
+  .footer-bottom-left { justify-content: center; }
+
+  /* ── AMBIENT ── */
   .big-num, .scroll-bar, .corner-badge, .hud-tl, .hud-tr { display: none; }
 
-  /* CURSOR */
+  /* ── CURSOR ── */
   body { cursor: auto; }
   .cursor, .cursor-ring, .cursor-label { display: none; }
 
-  /* CTA y toast */
+  /* ── SMART CTA ── */
   #smart-cta { left: 12px; right: 12px; width: auto; bottom: 52px; }
-  #toast     { min-width: 0; width: calc(100vw - 32px); left: 16px; right: 16px; }
 
-  /* MARQUEE */
+  /* ── MARQUEE ── */
   .marquee-item { font-size: 9px; padding: 0 20px; }
 
-  /* PRELOADER */
+  /* ── PRELOADER ── */
   .pre-logo    { font-size: 22px; }
   .pre-tagline { font-size: 11px; }
   .pre-bar-wrap { width: 140px; }
