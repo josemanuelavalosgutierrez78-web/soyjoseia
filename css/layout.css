@@ -395,28 +395,21 @@ footer {
   .footer-brand { grid-column: 1 / -1; }
 }
 
-@media (max-width: 768px) {
-  .intro-wrapper { flex-direction: column; gap: 40px; align-items: stretch; }
-  .hero-photo { width: 100%; min-height: 400px; }
-  .hero-photo img { height: 400px; }
-}
-
 @media (max-width: 700px) {
 
-  /* ── BASE: todo centrado en móvil ── */
-  .home,
-  .metrics,
-  .how,
-  .cases,
-  footer {
-    text-align: center;
-  }
+  /* BASE */
+  .home, .metrics, .how, .cases, footer { text-align: center; }
 
-  /* ── HERO ── */
+  /* NAV */
+  nav { padding: 0 20px; }
+  .nav-ul { display: none; }
+  .nav-hamburger { display: flex; }
+
+  /* HERO */
   .home { padding: 90px 20px 60px; min-height: auto; }
 
   .intro-wrapper {
-    flex-direction: column-reverse; /* foto arriba, texto abajo */
+    flex-direction: column-reverse;
     gap: 32px;
     align-items: center;
   }
@@ -426,11 +419,7 @@ footer {
     text-align: center;
   }
 
-  .intro-id { text-align: center; }
-
-  .intro-roles {
-    text-align: center;
-  }
+  .intro-id, .intro-roles { text-align: center; }
 
   .intro-links ul {
     flex-direction: column;
@@ -448,102 +437,71 @@ footer {
   .hero-photo {
     width: 100%;
     padding: 0;
+    min-height: unset;        /* ← cancela el min-height del 768 */
     justify-content: center;
   }
 
   .hero-photo img {
     max-width: 260px;
-    height: auto;
+    width: 100%;
+    height: auto !important;  /* ← cancela el height:400px del 768 */
     aspect-ratio: 3/4;
   }
 
-  /* ── SECTIONS ── */
-  .metrics, .how, .cases, footer {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
+  /* SECTIONS */
+  .metrics, .how, .cases, footer { padding-left: 20px; padding-right: 20px; }
   .metrics { padding-top: 60px; padding-bottom: 60px; }
   .how     { padding-top: 60px; padding-bottom: 60px; }
   .cases   { padding-top: 60px; padding-bottom: 60px; }
   footer   { padding-top: 60px; }
 
-  /* ── SECTION LABELS ── */
-  .section-label {
-    text-align: center !important;
-    display: block;
-  }
+  /* LABELS */
+  .section-label { text-align: center !important; display: block; }
 
-  /* ── SOBRE MÍ ── */
+  /* SOBRE MÍ */
   .sobre-grid {
     grid-template-columns: 1fr !important;
     gap: 32px !important;
     text-align: center !important;
     padding: 0 !important;
   }
-
-  .sobre-img-wrap {
-    margin: 0 auto;
-    max-width: 220px;
-  }
-
+  .sobre-img-wrap { margin: 0 auto; max-width: 220px; }
   .sobre-stats {
     grid-template-columns: 1fr 1fr;
     max-width: 300px;
     margin: 24px auto 0;
   }
+  .sobre-grid > div:last-child { text-align: center; }
 
-  .sobre-grid > div:last-child {
-    text-align: center;
-  }
-
-  /* ── HOW STEPS ── */
-  .step { text-align: left; } /* pasos sí van a la izquierda, son listas */
-
-  /* ── CASOS ── */
+  /* STEPS y CARDS — texto largo mejor a la izquierda */
+  .step { text-align: left; }
+  .case-card { text-align: left; }
   .cases-fade-right { display: none; }
-  .case-card { text-align: left; } /* cards de casos también */
 
-  /* ── COMUNIDAD ── */
+  /* COMUNIDAD */
   #comunidad { text-align: center; }
   .comunidad-stats { justify-content: center; }
 
-  /* ── FOOTER ── */
-  .footer-inner {
-    grid-template-columns: 1fr;
-    gap: 40px;
-    text-align: center;
-  }
-
+  /* FOOTER */
+  .footer-inner { grid-template-columns: 1fr; gap: 40px; text-align: center; }
   .footer-brand { grid-column: auto; align-items: center; }
   .footer-desc  { max-width: 100%; text-align: center; }
   .footer-wa    { align-self: center; }
-
-  .footer-col { text-align: center; }
-
-  .footer-bottom {
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    padding-bottom: 80px;
-  }
-
+  .footer-col   { text-align: center; }
+  .footer-bottom { flex-direction: column; align-items: center; gap: 10px; padding-bottom: 80px; }
   .footer-bottom-left { justify-content: center; }
 
-  /* ── AMBIENT ── */
+  /* AMBIENT */
   .big-num, .scroll-bar, .corner-badge, .hud-tl, .hud-tr { display: none; }
 
-  /* ── CURSOR ── */
+  /* CURSOR */
   body { cursor: auto; }
   .cursor, .cursor-ring, .cursor-label { display: none; }
 
-  /* ── SMART CTA ── */
+  /* MISC */
   #smart-cta { left: 12px; right: 12px; width: auto; bottom: 52px; }
-
-  /* ── MARQUEE ── */
   .marquee-item { font-size: 9px; padding: 0 20px; }
-
-  /* ── PRELOADER ── */
-  .pre-logo    { font-size: 22px; }
+  .pre-logo { font-size: 22px; }
   .pre-tagline { font-size: 11px; }
   .pre-bar-wrap { width: 140px; }
 }
